@@ -13,6 +13,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -80,8 +92,28 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.nav_resumen) {
             // Handle the camera action
+            BarChart chart = (BarChart) findViewById(R.id.barChart);
+
+            List<BarEntry> entries = new ArrayList<>();
+            entries.add(new BarEntry(0f, 30f));
+            entries.add(new BarEntry(1f, 80f));
+            entries.add(new BarEntry(2f, 60f));
+            entries.add(new BarEntry(3f, 50f));
+            // gap of 2f
+            entries.add(new BarEntry(5f, 70f));
+            entries.add(new BarEntry(6f, 60f));
+
+            BarDataSet dataSet = new BarDataSet(entries, "Bar Chart example");
+
+            BarData data = new BarData(dataSet);
+            data.setBarWidth(0.9f);
+            chart.setData(data);
+            chart.setFitBars(true);
+            chart.invalidate();
+
+
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
