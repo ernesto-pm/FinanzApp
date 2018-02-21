@@ -1,5 +1,8 @@
 package com.example.ernesto.finanzapp;
 
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -93,26 +96,11 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_resumen) {
-            // Handle the camera action
-            BarChart chart = (BarChart) findViewById(R.id.barChart);
 
-            List<BarEntry> entries = new ArrayList<>();
-            entries.add(new BarEntry(0f, 30f));
-            entries.add(new BarEntry(1f, 80f));
-            entries.add(new BarEntry(2f, 60f));
-            entries.add(new BarEntry(3f, 50f));
-            // gap of 2f
-            entries.add(new BarEntry(5f, 70f));
-            entries.add(new BarEntry(6f, 60f));
-
-            BarDataSet dataSet = new BarDataSet(entries, "Bar Chart example");
-
-            BarData data = new BarData(dataSet);
-            data.setBarWidth(0.9f);
-            chart.setData(data);
-            chart.setFitBars(true);
-            chart.invalidate();
-
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.mainFrameLayout, new SummaryFragment());
+            fragmentTransaction.commit();
 
         } else if (id == R.id.nav_gallery) {
 
