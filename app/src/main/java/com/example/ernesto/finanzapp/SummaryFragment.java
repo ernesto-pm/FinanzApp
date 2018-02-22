@@ -44,22 +44,39 @@ public class SummaryFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         BarChart chart = (BarChart) view.findViewById(R.id.barChart);
 
-        List<BarEntry> entries = new ArrayList<>();
-        entries.add(new BarEntry(0f, 30f));
-        entries.add(new BarEntry(1f, 100f));
-        entries.add(new BarEntry(2f, 60f));
-        entries.add(new BarEntry(3f, 50f));
+        List<BarEntry> ingresos = new ArrayList<>();
+        ingresos.add(new BarEntry(0f, 30f));
+        ingresos.add(new BarEntry(1f, 100f));
+        ingresos.add(new BarEntry(2f, 60f));
+        ingresos.add(new BarEntry(3f, 50f));
         // gap of 2f
-        entries.add(new BarEntry(5f, 70f));
-        entries.add(new BarEntry(6f, 60f));
+        ingresos.add(new BarEntry(5f, 70f));
+        ingresos.add(new BarEntry(6f, 60f));
 
-        BarDataSet dataSet = new BarDataSet(entries, "Bar Chart example");
-        dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+        List<BarEntry> gastos = new ArrayList<>();
+        gastos.add(new BarEntry(0f, 40f));
+        gastos.add(new BarEntry(1f, 50f));
+        gastos.add(new BarEntry(2f, 20f));
+        gastos.add(new BarEntry(3f, 80f));
+        // gap of 2f
+        gastos.add(new BarEntry(5f, 25f));
+        gastos.add(new BarEntry(6f, 40f));
 
-        BarData data = new BarData(dataSet);
-        data.setBarWidth(0.9f);
+        BarDataSet gastosDataSet = new BarDataSet(ingresos, "Ingresos");
+        gastosDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+
+        BarDataSet ingresosDataSet = new BarDataSet(gastos, "Gastos");
+        ingresosDataSet.setColor(R.color.colorAccent);
+
+        BarData data = new BarData(gastosDataSet, ingresosDataSet);
+        data.setBarWidth(0.45f);
         chart.setData(data);
-        chart.setFitBars(true);
+        chart.groupBars(0, 0.1f, 0.02f);
+
+        //BarData data = new BarData(gastosDataSet);
+        //data.setBarWidth(0.9f);
+        //chart.setData(data);
+        //chart.setFitBars(true);
 
         // Styling
 
