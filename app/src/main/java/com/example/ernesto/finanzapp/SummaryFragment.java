@@ -1,6 +1,7 @@
 package com.example.ernesto.finanzapp;
 
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.support.annotation.Nullable;
@@ -8,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.ernesto.finanzapp.ChartFormatters.MonthFormatter;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -25,6 +27,7 @@ import java.util.ArrayList;
  */
 public class SummaryFragment extends Fragment {
 
+    String[] months = new String[]{"Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"};
 
     public SummaryFragment() {
         // Required empty public constructor
@@ -49,49 +52,67 @@ public class SummaryFragment extends Fragment {
         ingresos.add(new BarEntry(1f, 100f));
         ingresos.add(new BarEntry(2f, 60f));
         ingresos.add(new BarEntry(3f, 50f));
-        // gap of 2f
-        ingresos.add(new BarEntry(5f, 70f));
+        ingresos.add(new BarEntry(4f, 30f));
+        ingresos.add(new BarEntry(5f, 100f));
         ingresos.add(new BarEntry(6f, 60f));
+        ingresos.add(new BarEntry(7f, 50f));
+        ingresos.add(new BarEntry(8f, 30f));
+        ingresos.add(new BarEntry(9f, 100f));
+        ingresos.add(new BarEntry(10f, 100f));
+        ingresos.add(new BarEntry(11f, 100f));
+
 
         List<BarEntry> gastos = new ArrayList<>();
-        gastos.add(new BarEntry(0f, 40f));
-        gastos.add(new BarEntry(1f, 50f));
-        gastos.add(new BarEntry(2f, 20f));
-        gastos.add(new BarEntry(3f, 80f));
-        // gap of 2f
-        gastos.add(new BarEntry(5f, 25f));
-        gastos.add(new BarEntry(6f, 40f));
+        gastos.add(new BarEntry(0f, 0f));
+        gastos.add(new BarEntry(1f, 0f));
+        gastos.add(new BarEntry(2f, 0f));
+        gastos.add(new BarEntry(3f, 0f));
+        gastos.add(new BarEntry(4f, 0f));
+        gastos.add(new BarEntry(5f, 0f));
+        gastos.add(new BarEntry(6f, 0f));
+        gastos.add(new BarEntry(7f, 0f));
+        gastos.add(new BarEntry(8f, 0f));
+        gastos.add(new BarEntry(9f, 0f));
+        gastos.add(new BarEntry(10f, 0f));
+        gastos.add(new BarEntry(11f, 0f));
 
+        
         BarDataSet gastosDataSet = new BarDataSet(ingresos, "Ingresos");
-        gastosDataSet.setColors(ColorTemplate.MATERIAL_COLORS);
+        gastosDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
 
         BarDataSet ingresosDataSet = new BarDataSet(gastos, "Gastos");
-        ingresosDataSet.setColor(R.color.colorAccent);
+        ingresosDataSet.setColors(Color.RED);
 
-        BarData data = new BarData(gastosDataSet, ingresosDataSet);
-        data.setBarWidth(0.45f);
+        BarData data = new BarData(ingresosDataSet, gastosDataSet);
+        data.setBarWidth(0.46f);
         chart.setData(data);
-        chart.groupBars(0, 0.1f, 0.02f);
+        chart.groupBars(0, 0.04f, 0.02f);
+        chart.setFitBars(true);
 
-        //BarData data = new BarData(gastosDataSet);
-        //data.setBarWidth(0.9f);
-        //chart.setData(data);
-        //chart.setFitBars(true);
+
 
         // Styling
 
         // X axis
         XAxis xAxis = chart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
-        xAxis.setTextSize(10f);
         xAxis.setDrawAxisLine(true);
-        xAxis.setDrawGridLines(false);
+        xAxis.setDrawGridLines(true);
+        xAxis.setGranularity(1f);
+        xAxis.setAxisMinimum(0f);
+        xAxis.setCenterAxisLabels(true);
+        xAxis.setTextSize(5);
+        xAxis.setValueFormatter(new MonthFormatter(months));
 
 
         // Y axis
         YAxis left = chart.getAxisLeft();
         left.setDrawGridLines(false);
         left.setDrawAxisLine(true);
+        left.setAxisMinimum(0f);
+        //left.setValueFormatter(new MonthFormatter(months));
+
+        chart.getDescription().setEnabled(false);
         chart.getAxisRight().setEnabled(false);
 
         chart.animateY(700);
