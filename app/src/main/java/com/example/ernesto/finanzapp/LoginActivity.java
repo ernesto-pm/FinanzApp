@@ -1,7 +1,9 @@
 package com.example.ernesto.finanzapp;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -21,6 +23,7 @@ import org.json.JSONObject;
 public class LoginActivity extends Activity {
 
     private EditText emailInput, passwordInput;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +32,11 @@ public class LoginActivity extends Activity {
 
         emailInput = (EditText) findViewById(R.id.email);
         passwordInput = (EditText) findViewById(R.id.password);
+
+        sharedPreferences = getSharedPreferences("user", Context.MODE_PRIVATE);
+        if(sharedPreferences.contains("token")) {
+            startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        }
     }
 
 
@@ -63,9 +71,12 @@ public class LoginActivity extends Activity {
             public void onResponse(JSONObject response) {
                 try {
                     String token = response.getString("token");
-                    //Log.i("Token", token);
-                    Intent it = new Intent(LoginActivity.this, MainActivity.class);
-                    startActivity(it);
+
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("token", token);
+                    editor.commit();
+
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
                     finish();
 
                 } catch (JSONException e) {
