@@ -10,12 +10,12 @@
             android:title="Resumen" />
         <item
             android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:icon="@drawable/transaction"
+            android:title="Nueva Transaccion" />
         <item
             android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
+            android:icon="@drawable/category"
+            android:title="Nueva Categoria" />
         <item
             android:id="@+id/nav_manage"
             android:icon="@drawable/ic_menu_manage"
