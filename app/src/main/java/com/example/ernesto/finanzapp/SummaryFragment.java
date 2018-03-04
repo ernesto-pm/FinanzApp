@@ -11,11 +11,15 @@ import android.view.ViewGroup;
 
 import com.example.ernesto.finanzapp.ChartFormatters.MonthFormatter;
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.PieData;
+import com.github.mikephil.charting.data.PieDataSet;
+import com.github.mikephil.charting.data.PieEntry;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.List;
@@ -43,10 +47,23 @@ public class SummaryFragment extends Fragment {
 
     }
 
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        BarChart chart = (BarChart) view.findViewById(R.id.barChart);
+    public void populatePieChart(PieChart pieChart) {
+        List<PieEntry> entries = new ArrayList<>();
+        entries.add(new PieEntry(18.5f, "Green"));
+        entries.add(new PieEntry(26.7f, "Yellow"));
+        entries.add(new PieEntry(24.0f, "Red"));
+        entries.add(new PieEntry(30.8f, "Blue"));
 
+        PieDataSet set = new PieDataSet(entries, "Election Results");
+        PieData data = new PieData(set);
+
+        set.setColors(ColorTemplate.COLORFUL_COLORS);
+
+        pieChart.setData(data);
+        pieChart.invalidate();
+    }
+
+    public void createSummaryBarChart(BarChart barChart) {
         List<BarEntry> ingresos = new ArrayList<>();
         ingresos.add(new BarEntry(0f, 30f));
         ingresos.add(new BarEntry(1f, 100f));
@@ -76,7 +93,7 @@ public class SummaryFragment extends Fragment {
         gastos.add(new BarEntry(10f, 0f));
         gastos.add(new BarEntry(11f, 0f));
 
-        
+
         BarDataSet gastosDataSet = new BarDataSet(ingresos, "Ingresos");
         gastosDataSet.setColors(ColorTemplate.JOYFUL_COLORS);
 
@@ -85,16 +102,16 @@ public class SummaryFragment extends Fragment {
 
         BarData data = new BarData(ingresosDataSet, gastosDataSet);
         data.setBarWidth(0.46f);
-        chart.setData(data);
-        chart.groupBars(0, 0.04f, 0.02f);
-        chart.setFitBars(true);
+        barChart.setData(data);
+        barChart.groupBars(0, 0.04f, 0.02f);
+        barChart.setFitBars(true);
 
 
 
         // Styling
 
         // X axis
-        XAxis xAxis = chart.getXAxis();
+        XAxis xAxis = barChart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
         xAxis.setDrawAxisLine(true);
         xAxis.setDrawGridLines(true);
@@ -106,17 +123,28 @@ public class SummaryFragment extends Fragment {
 
 
         // Y axis
-        YAxis left = chart.getAxisLeft();
+        YAxis left = barChart.getAxisLeft();
         left.setDrawGridLines(false);
         left.setDrawAxisLine(true);
         left.setAxisMinimum(0f);
         //left.setValueFormatter(new MonthFormatter(months));
 
-        chart.getDescription().setEnabled(false);
-        chart.getAxisRight().setEnabled(false);
+        barChart.getDescription().setEnabled(false);
+        barChart.getAxisRight().setEnabled(false);
 
-        chart.animateY(700);
+        barChart.animateY(700);
 
-        chart.invalidate();
+        barChart.invalidate();
     }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        BarChart barChart = (BarChart) view.findViewById(R.id.barChart);
+        PieChart pieChart = (PieChart) view.findViewById(R.id.pieChart);
+
+        createSummaryBarChart(barChart);
+        populatePieChart(pieChart);
+    }
+
+
 }
